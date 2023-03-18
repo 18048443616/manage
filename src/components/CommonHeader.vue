@@ -4,7 +4,9 @@
       <div class="btn">
         <el-button icon="el-icon-menu" plain size="mini" @click="changeCollapse"></el-button>
       </div>
-      <span>首页</span>
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item v-for="item in tabs" :key="item.path" :to="{ path: item.path }">{{ item.label }}</el-breadcrumb-item>
+      </el-breadcrumb>
     </div>
     <div class="r-content">
       <el-dropdown>
@@ -21,6 +23,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   data() {
     return {};
@@ -29,6 +32,11 @@ export default {
     changeCollapse(){
         this.$store.commit('changeCollapse')
     }
+  },
+  computed:{
+    ...mapState({
+      tabs:state=>state.tab.tabsList
+    })
   }
 };
 </script>
@@ -47,6 +55,19 @@ export default {
     color: #fff;
     .btn {
       margin-right: 10px;
+    }
+    /deep/.el-breadcrumb__item{
+      .el-breadcrumb__inner{
+        font-weight: normal;
+        &.is-link{
+          color: #666;
+        }
+      }
+      &:last-child{
+        .el-breadcrumb__inner{
+          color: #fff;
+        }
+      }
     }
   }
   .r-content {

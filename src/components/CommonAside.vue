@@ -75,8 +75,6 @@ export default {
     getMenu().then((res) => {
       this.noChildren = res.data.filter((item) => !item.children);
       this.hasChildren = res.data.filter((item) => item.children);
-      console.log(this.noChildren);
-      console.log(this.hasChildren);
     });
   },
   methods: {
@@ -90,6 +88,7 @@ export default {
       if (this.$route.path != item.path && !(this.$route.path==='/home' && item.path==='/')) {
         this.$router.push(item.path);
       }
+      this.$store.commit('addMenu',item)
     },
   },
 };
